@@ -1,0 +1,958 @@
+//var staff_id="<?php echo $_session['location']; ?>";
+				//alert(staff_id);
+
+
+
+
+				// update table for all staff
+
+				//	$update_data="UPDATE [distribution].[dbo].[uploaded_staff_list] set qty=(SELECT cadre_table.Qty from [distribution].[dbo].[cadre_table] where cadre_table.cadre=uploaded_staff_list.cadre and month='?' and YEAR(data_year)='?') ";
+				//		$update_data_d=sqlsrv_prepare($db_conn,$update_data,array($data_mon,$year));
+					//		sqlsrv_execute($update_data_d);	
+
+				// insert into aggregatetable
+			//$save_aggregate="INSERT into [distribution].[dbo].[aggregate_data_upload] (aggre_cadre,aggre_qty) SELECT uploaded_staff_list.cadre,sum(uploaded_staff_list.qty) from [distribution].[dbo].[uploaded_staff_list] where date='?' and month='?' group by uploaded_staff_list.cadre";
+			//		$save_aggregate_data=sqlsrv_prepare($db_conn,$save_aggregate,array($data_date,$data_mon));
+				//	sqlsrv_execute($save_aggregate_data);
+
+
+				
+							<tr>
+								<td>'.$m.'</td>
+								<td>'.$staff_listd['staffid'].'</td>
+								<td>'.$staff_listd['cadre'].'</td>
+								<td>'.$staff_listd['qty'].'</td>
+								<td>'.$staff_listd['month'].'</td>
+								<td>'.$staff_listd['status'].'</td>
+								<td>'.$staff_listd['appro_date'].'</td>
+								<td>'.$staff_listd['issue_date'].'</td>
+								<td>'.$staff_listd['out_date'].'</td>
+
+
+								
+
+
+							</tr>
+
+
+							$('#rep').dataTable({
+							 paging: false,
+    						searching: false,
+    						 stateSave: true,
+    						//"bDestroy": true,
+							columns: [
+        						{ fetch_all_staff_id: 'SN' },
+       							{ fetch_all_staff_id: 'staffid' },
+       							{ fetch_all_staff_id: 'cadre' },
+       							{ fetch_all_staff_id: 'qty' },
+       							{ fetch_all_staff_id: 'month' },
+        						{ fetch_all_staff_id: 'status' },
+        						{ fetch_all_staff_id: 'month' },
+        						//{ fetch_all_staff_id: 'appro_date' },
+								{ fetch_all_staff_id: 'issue_date' },
+								{ fetch_all_staff_id: 'out_date' }
+   							 ]
+    							
+						});
+
+
+
+
+
+						for (var i = 0; i < fetch_all_staff_id.length; i++) {
+                            table.row.add([
+                                fetch_all_staff_id[i].staffid,
+                                fetch_all_staff_id[i].cadre,
+                                fetch_all_staff_id[i].qty,
+                                fetch_all_staff_id[i].month,
+                                fetch_all_staff_id[i].status,
+                                fetch_all_staff_id[i].appro_date,
+                                fetch_all_staff_id[i].issue_date,
+                                fetch_all_staff_id[i].out_date,
+
+                            ]).draw();
+                        }
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<?php include("../datastore/db.php");?>
+
+		<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+<link href="../resources/util/DataTables-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet"/>
+<link href="../resources/util/AutoFill-2.5.3/css/autoFill.dataTables.css" rel="stylesheet"/>
+<link href="../resources/util/Buttons-2.3.6/css/buttons.dataTables.min.css" rel="stylesheet"/>
+<link href="../resources/util/DateTime-1.4.1/css/dataTables.dateTime.min.css" rel="stylesheet"/>
+<link href="../resources/util/FixedColumns-4.2.2/css/fixedColumns.dataTables.min.css" rel="stylesheet"/>
+<link href="../resources/util/Responsive-2.4.1/css/responsive.dataTables.min.css" rel="stylesheet"/>
+<link href="../resources/util/Select-1.6.2/css/select.dataTables.min.css" rel="stylesheet"/>
+ 
+<script src="../resources/util/jQuery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="../resources/util/JSZip-2.5.0/jszip.min.js"></script>
+<script src="../resources/util/pdfmake-0.2.7/pdfmake.min.js"></script>
+<script src="../resources/util/pdfmake-0.2.7/vfs_fonts.js"></script>
+<script src="../resources/util/DataTables-1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="../resources/util/AutoFill-2.5.3/js/dataTables.autoFill.min.js"></script>
+<script src="../resources/util/Buttons-2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="../resources/util/Buttons-2.3.6/js/buttons.html5.min.js"></script>
+<script src="../resources/util/Buttons-2.3.6/js/buttons.print.min.js"></script>
+<script src="../resources/util/DateTime-1.4.1/js/dataTables.dateTime.min.js"></script>
+<script src="../resources/util/FixedColumns-4.2.2/js/dataTables.fixedColumns.min.js"></script>
+<script src="../resources/util/Responsive-2.4.1/js/dataTables.responsive.min.js"></script>
+<script src="../resources/util/Select-1.6.2/js/dataTables.select.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+	<title>Approval</title>
+
+</head>
+
+
+<!--ApprovalPage-->
+<section class="container" style="margin-top: 20px;">
+	<div class="col-md-6 m-auto col-sm-6 m-auto col-xs-6 col-lg-8 m-auto">
+
+<label style="font-size:40px; font-weight: bold; color:; margin-left: 40px; margin-bottom: 20px; font-family:Acme;">PRODUCT DISTRIBUTION APPROVAL</label>
+
+<div>
+
+	<?php
+
+			if(isset($_GET['lambda'])){
+				$use_id_data=$_GET['lambda'];
+				//echo $use_id_data;
+
+				$use_id_data_d=base64_decode($use_id_data);
+				$ind=explode('(afolabi)', $use_id_data_d);
+
+				$mail_id=$ind[1];
+				$id=$ind[0];
+
+				echo $mail_id;
+				echo $id;
+
+				$id_=sqlsrv_query($db_conn,"SELECT * FROM [distribution].[dbo].[aggregate_data_upload]");
+
+				$staff_aggre=array();
+				
+				/*while($id_count_=sqlsrv_fetch_array($id_,SQLSRV_FETCH_ASSOC)){
+
+						echo '
+						<tbody>
+							<tr>
+								<td>'.$n.'</td>
+								<td>'.$id_count_['aggre_cadre'].'</td>
+								<td>'.$id_count_['aggre_qty'].'</td>
+								<td>'.$id_count_['aggre_month'].'</td>
+								<td>'.$id_count_['aggre_year'].'</td>
+
+
+							</tr></tbody>
+							';
+
+								$n=$n+1;
+				}
+				
+
+
+				echo '
+';
+
+			$mnn=1;
+			while($id_count_=sqlsrv_fetch_array($id_,SQLSRV_FETCH_ASSOC)){
+			echo '<tr style="background-color:white;">			
+			<td>'.$mnn.'</td>
+ 			<td>'.$id_count_['aggre_cadre'].'</td>
+ 			<td>'.$id_count_['aggre_qty'].'</td>
+ 			<td>'.$id_count_['aggre_month'].'</td>
+ 			<td>'.$id_count_['aggre_year'].'</td>
+ 			<td>'.$id_count_['doc_id'].'</td>
+ 			</tr>
+
+				';
+
+			$mnn=$mnn+1;
+		}
+
+	*/			
+		}
+
+
+
+
+	?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Start of the table -->
+
+<div class="row">
+	<div class="col-sm-12">
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#" id="aggregate">Aggregate</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#"  id="employeeRecord">Employee Record</a>
+  </li>
+  
+</ul>
+
+</div>
+</div>
+
+<div class="row mt-3" id="viewapprovalData">
+
+<table class="table" id="empltable">
+<thead>
+	
+	<td>EMPLOYEE ID</td>
+	<td>CADRE</td>
+	<td>QTY</td>
+	<td>MONTH</td>
+
+
+
+</thead>
+
+</table>
+
+<table class="table" id="alltab">
+		<thead>
+			<th>SN</th>
+			<th>Cadre</th>
+			<th>Total Quantity</th>
+			<th>Month</th>
+			<th>Year</th>
+		</thead>
+
+	
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+	
+
+
+</div>
+
+
+
+
+
+
+<div class="row">
+	<div class="col-sm-3 float-left">
+		<button class="btn btn-danger" id="rejectdata">Reject</button>
+		<button class="btn btn-primary" id="approvedata">Approve</button>
+	</div>
+	
+	
+	
+</div>
+
+
+
+
+
+
+
+
+
+
+	<?php
+
+
+		
+
+			//$monthlynoodles=sqlsrv_query($db_conn,"SELECT * FROM [distribution].[dbo].[uploaded_staff_list]  where month='$mon' and qty is not null");
+
+	//while ($d=sqlsrv_fetch_array($monthlynoodles,SQLSRV_FETCH_ASSOC)){
+	//echo $d['cadre']."   ".$d['qty'].'<br>';
+//}
+
+			//var_dump($id_app);
+			//="SURULERE/2023-01-10 11:22:29/Staff Gate Pass/24";
+
+		//$id_app=sqlsrv_query($db_connection,"SELECT * FROM gpass.dbo.gpass_trans_log where transact_id='$app_id'");
+		//$id_count_app=sqlsrv_fetch_array($id_app,SQLSRV_FETCH_ASSOC);
+
+		//$id_count_app_col=$id_count_app['Approval_status_change_date'];
+		//var_dump($id_count_app_col);
+		//if(!empty($id_count_app['Approval_status_change_date'])){
+//echo '<script type="text/javascript"> alert("This requested has been granted before!")</script>';
+//			echo '<h1> Inform the sender to initiate a fresh request</h1>';
+
+			
+//		}else{
+
+
+
+			//echo $id_count_app['Approval_name'];
+
+			
+	//}
+ ?>
+
+</div>
+
+</div>
+
+</section>
+
+
+<script type="text/javascript">
+/*	$(document).ready(function(){
+
+		$('#reject_id').click(function(){
+			//alert("I am rejecting the request");
+
+				var reject_id=$('#reject_id').val();
+					var trac_id=$('#app_id_use').val();
+					//alert(trac_id);
+				$.ajax({
+				url:'datastore/server.php',
+				method:'POST',
+				data:{reject_staff:1,reject_id:reject_id,trac_id:trac_id},
+				dataType:'JSON',
+				success : function(feedb){
+						alert(feedb);
+						window.location.href='https://forms.dufil.com';
+				}
+			});
+
+		});
+	$('#approve_id').click(function(){
+			//alert("I am Approving the request");
+			var approve_id=$('#approve_id').val();
+			var trac_id=$('#app_id_use').val();
+			//alert(trac_id);
+			$.ajax({
+				url:'datastore/server.php',
+				method:'POST',
+				data:{approve_staff:1,approve_id:approve_id,trac_id:trac_id},
+				dataType:'JSON',
+				success : function(feedbd){
+						alert(feedbd);
+						window.location.href='https://forms.dufil.com';
+				}
+			});
+		});
+
+	});*/
+</script>
+
+
+
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+				//$('#alltab').DataTable().destroy();
+			//$('#alltab').dataTable();
+		$('#aggregate').click(function(){
+			
+				$.ajax({
+					url:'../DataStore/server2.php',
+					method:'POST',
+					data:{fetch_flavour_data_app:1},
+					dataType:'JSON',
+					success:function(fetch_flavour_data_r){
+
+						$('#empltable').css('display','none');
+						alert("I am loading aggregate record here");
+						//$('#alltab').html(fetch_flavour_data_r);
+						alert(fetch_flavour_data_r)
+					
+
+						//});
+					//$('#alltab').html(fetch_flavour_data_r);
+				}
+				});
+				
+
+
+
+
+
+				//$('#viewapprovalData').load('aggredateData.php');
+			});
+
+			
+				//$('#viewapprovalData').load('staffdetails.php');
+			
+
+
+
+			$('#employeeRecord').click(function(){
+					$('#empltable').DataTable().destroy();
+				//alert("I am here now");
+
+				$.ajax({
+					url:'../DataStore/server2.php',
+					method:'POST',
+					data:{staffload:1},
+					dataType:'JSON',
+					success:function(staffload_data){
+						alert("I am loading staffrecord here record here");
+						alert(staffload_data);
+						$('#alltab').css('display','none');
+						//$('#empltable').dataTable();
+					//$('#viewapprovalData').append(fetch_flavour_data_r);
+				}
+				});
+				
+
+
+
+
+
+				//$('#viewapprovalData').load('aggredateData.php');
+			});
+
+
+
+
+
+
+
+
+
+		$('#rejectdata').click(function(){
+			$('#reasonData').dialog({
+					//resizable:false,
+					title:'Reason for Rejection',
+					height:300,
+					width:300,
+					modal: true,
+					dialogClass: 'no-close',
+					closeOnEscape: false,
+					buttons:{
+						Ok: function(){
+							var reason=$('#rejectionreason').val();
+							var reject_id='<?php echo $id; ?>';
+							var document_id='<?php echo $mail_id; ?>';
+							//alert(document_id);
+							if(reason==""){
+								alert("You are requied to give a reason for this rejection");
+							}else{
+								$.ajax({
+								url:'../datastore/server2.php',
+								method:'POST',
+								data:{reject_staff_emp:1,reason:reason,reject_id:reject_id,document_id,document_id},
+								dataType:'JSON',
+								success : function(rej){
+									alert(rej);
+									window.location.href='../';
+										}
+								});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							}
+
+						}
+					}
+
+				});
+		
+		alert("A reason will help to address the error you noticed, kindly provide a suitable reason for the rejection");
+		
+		});
+		$('#approvedata').click(function(){
+			alert("I am here");
+			var approved_id='<?php echo base64_encode($id); ?>';
+			var document_id='<?php echo base64_encode($mail_id); ?>';
+
+			//alert("You clicked me");
+		
+				$.ajax({
+					url:'../datastore/server2.php',
+					method:'POST',
+					data:{Approved_staff_emp:1,approved_id:approved_id,document_id,document_id},
+					dataType:'JSON',
+					success : function(approvedd){
+					alert(approvedd);
+					window.location.href='../';
+					}
+				});
+			});
+		
+
+
+
+
+
+
+	$('#alltab').DataTable().destroy();
+		$('#alltab').DataTable({
+
+		scrollY: '50vh',
+        scrollCollapse: true,
+        paging: false,
+			dom: 'Blfrtip',
+        buttons: [
+            {extend:'copy',className:'btn-danger'},
+            {extend:'csv',className:'btn-info'},
+            {extend:'excel',className:'btn-secondary'},
+            {extend:'pdf',className:'btn-primary'},
+        ]
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+		});
+
+
+
+	</script>
+
+		
+
+
+<section  id="reasonData" style="display: none;">
+	<div class="col-sm-6 ">
+		<textarea cols="col-sm-6 form-control" rows="8" cols="" id="rejectionreason" ></textarea>
+		
+				
+
+	</div>
+	
+</section>
+
+				 
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			//$('#showitemtoissue').load('issueforstaff.php');
+			//$('#issuereport').click(function(){
+				//		$('#showitemtoissue').load('loadissuance.php');
+
+			//});
+			$('#showitemtoissue').click(function(){
+			$('#showitemtoissue').load('loadissuance.php');
+			});
+			$('#issuedata').click(function(){
+				alert("Yes");
+					$('#showitemtoissue').load('issueforstaff.php');
+
+			});
+
+
+
+
+
+			//$('#issueDatanow').css('display','block');
+			//$('#showtable').css('display','none');
+	
+			//$('#issuedata').click(function(){
+			//	$('#issueDatanow').css('display','block')
+				//$('#showtable').css('display','none');
+				//$('#issueDatanow').css('display','block');
+				
+			//	$('#inputstaffid').on('input',function(){
+					//var inputed=$('#inputstaffid').val();
+					//alert(inputed);
+				/*	if (inputed==""){
+						alert("A valid Employee ID is required to fetch you a result");
+					}else{
+						
+
+						$.ajax({
+
+								url:'../DataStore/server2.php',
+								method:'POST',
+								data:{getindividualemployee:1,inputed:inputed},
+								dataType:'JSON',
+								success: function(employeedetailsfetched){
+									alert(employeedetailsfetched)
+								}
+
+
+						});
+
+
+					}*/
+		//		});
+
+		//	});
+
+
+
+
+
+/*
+
+			$('#issuereport').click(function(){
+				//alert("Yes. I am checking");
+				$('#issueDatanow').css('display','none');	
+
+				$.ajax({
+					url:'../DataStore/server2.php',
+					method:'POST',
+					data:{pullallreport:1},
+					dataType:'JSON',
+					success:function(dfv){
+						//alert(dfv);	
+						$('#reporttablecentral').DataTable().destroy();
+									$('#showtable').css('display','block');		
+											
+						var table = $('#reporttablecentral').DataTable({
+									data:dfv,
+									columns:[
+											{data:'staffid'},
+											{data:'cadre'},
+											{data:'qty'},
+											{data:'month'},
+											{data:'status'},
+											{data:'appro_date'},
+											{data:'issue_date'},
+											{data:'out_date'},
+
+							]
+
+
+
+						});
+
+					}
+				});
+			});
+			*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+		$('#aggregate').click(function(){
+			var aggregated="aggregate";
+			//var id= '<?php echo $id; ?>';
+			//var id= 
+			alert("Agrregate");
+			$.ajax({
+				url:'../DataStore/server2.php',
+				method:'POST',
+				data:{aggregate:1,aggregated:aggregated},
+				dataType:'JSON',
+				success:function(aggre){
+					//$('#alltabframe').css('display','block');
+					$('#alltab').DataTable().destroy();
+					var table = $('#alltab').DataTable({
+						data:aggre,
+						columns:[
+
+							{data:'staffid'},
+							{data:'cadre'},
+							{data:'qty'},
+							{data:'month'},
+
+
+							
+
+
+							]
+
+					});
+
+				}
+
+			});
+
+		
+
+	$('#employeeRecord').click(function(){
+		var allstaff="allstaff";
+		//var id= '<?php echo $id; ?>';
+		
+
+			$.ajax({
+				url:'../DataStore/server2.php',
+				method:'POST',
+				data:{employeeRecord:1,allstaff:allstaff},
+				dataType:'JSON',
+				success:function(aggre){
+					$('#viewapprovalData').css('display','block');
+					$('#empltable').DataTable().destroy();
+					var table = $('#empltable').DataTable({
+						data:aggre,
+						columns:[
+							{data:'staffid'},
+							{data:'cadre'},
+							{data:'qty'},
+							{data:'month'},
+
+							]
+
+					});
+
+				}
+
+			});
+
+
+
+});
+
+});
+
+
+</script>
+
+
+
+
+buttons:{
+			'Check In':function () {
+
+			//var id=$('#idfind').val();
+
+	$.ajax({
+    			url:'../DataStore/server2.php',
+    			method:'POST',
+    			data:{indiv_checkin:1,id:id},
+    			dataType:'JSON',
+    			success:function(indcheckin){
+    				alert(indcheckin);
+    			}
+    				
+
+    		});
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			},
+			'Check Out':function () {
+			// alert("Reset Button");
+
+//	var id=$('#idfind').val();
+
+
+	$.ajax({
+    			url:'../DataStore/server2.php',
+    			method:'POST',
+    			data:{indiv_checkout:1,id:id},
+    			dataType:'JSON',
+    			success:function(indcheckout){
+    				alert(indcheckout);
+    				
+    			}
+    				
+
+    		});
+
+
+
+
+
+
+
+			},
+			close:function () {
+				//e.preventDefault();
+				$('#approver').html("");
+    			$('#status').html("");
+    			$('#tapprover').html("");
+    			$('#timerin').html("");
+    			$('#timerout').html("");
+    				$('#diag').dialog("destroy");
+			}
+		}
+		
+	});
+
+
+
+
+
+
+
+    			
+    			}
+    				
+	echo '
+
+				<div class="container mt-5 alert alert-info">
+
+					<h1>You have previously approved or rejected this transaction</h1>
+
+				<script type="text/javascript">
+
+				$("#rejectdata").css("display","none");
+
+				</script>
+
+
+				</div>
+
+
+
+		';
+
+
+
+	$sender_list=[$hr,$whse,$fm];
+
+
+		foreach($sender_list as $f){
+		$sender_data=$f."-lad-".$doc_id_data;
+	 $mail->setFrom('it.notifications@dufil.com', 'DUFIL FORMS');
+    $mail->addAddress($f, "Test Data"); 
+    //$mail->addAddress($whse, "Test Data");      // Add a recipient
+    $mail->addReplyTo('it.notifications@dufil.com', 'DUFIL FORMS');
+    //$mail->addCC('cc@example.com');
+    //$mail->addBCC('bcc@example.com');
+
+
+    // Attachments
+    //$mail->addAttachment('monthlynoodlesData.csv');         // Add attachments
+    //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+    // Content
+    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->Subject = 'EMPLOYEE NOODLES DISTRIBUTION APPROVAL ';
+    $mail->Body    = nl2br("Dear  ".$f.';'."\r\n\n Employee Noodles distribution process for the month ".date('M-Y')." has been initiated, you are requested to view the sheet, approve or disapprove as required. Note: Your approval is vital for the process to be completed before issuance can start .\n\n Kindly click the link below to approve or reject his or her request
+    <a href='https://forms.dufil.com/distribution/documents/Approval_page.php?lambda=".base64_encode($sender_data)."'>Click Here to Approve</a>\n\n DUFIL FORMS.
+    		");
+    $mail->AltBody = " This mail is to be send to a recepient in Dufil Prima Foods Ltd";
+
+    //$mail->send();
+ $hrlink="HR";
+ $insert_sqlhr='INSERT INTO [distribution].[dbo].[approval_table] (app_id,document_id,approval_id,approval_app_date,month,year,location,sent_date) values (?,?,?,?,?,?,?,?)';
+ $insert_sql_preparehr=sqlsrv_prepare($db_conn,$insert_sqlhr,array($hrlink,$doc_id_data,$hr,$app_date_use,$doc_month,$doc_year,$loc_d,$sentDate));
+ sqlsrv_execute($insert_sql_preparehr);
+
+
+
+}
+
+
+	echo '
+
+							<tr>
+								<td>'.$fc['month'].'</td>
+								<td>'.$fc['cadre'].'</td>
+								<td>'.$fc['location'].'</td>
+								<td>'.$fc['Qty'].'</td>
+								
+								<td><button class="individual_item" value='.$fc['q_id'].' style="background-color:green; border: 1px solid white; border-radius:5px 10px 5px 10px; color:white;"><i class="icofont-eye-open "  style=""></i></button></td>
+
+								
+
+
+
+
+							</tr>
+
+				';

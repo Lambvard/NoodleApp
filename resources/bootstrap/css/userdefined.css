@@ -1,0 +1,14 @@
+.body{
+	background-image: url('../../../images/Newsec.png');
+	background-size: cover;
+}
+.front_log_box{
+	border: 1px solid white;
+	border-radius: 10px 10px 10px 10px;
+	height: 400px;
+	background-color: white;
+	
+	width: 400px;
+	margin: auto;
+}
+/*background-color: #2c063d;*/
